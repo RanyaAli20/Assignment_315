@@ -10,7 +10,6 @@ $conn = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
     echo "cooooonnnnn";
 	}
 catch(PDOException $e){
-	
     echo "Error: " . $e->getMessage();
    }
 ?>
