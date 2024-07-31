@@ -32,6 +32,14 @@ function register_user($conn) {
         $sql = "INSERT INTO user (u_name, Password, Priv, Passport_no) VALUES ('$username', '$password', '$role', '$passport_no')";
         $conn->exec($sql);
         echo "User registered successfully";
+
+        // Redirect based on the role
+        if ($role == 'admin') {
+            header("Location: admin_page.php");
+        } else {
+            header("Location: user_page.php");
+        }
+        exit(); // Make sure to exit after header redirection
     } catch(PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
