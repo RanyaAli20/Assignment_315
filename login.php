@@ -15,22 +15,27 @@ function display_login_form() { ?>
 <?php }
 
 function login_user($conn) {
+    if (!isset($_POST['username']) || !isset($_POST['password'])) {
+        echo "Username and password are required.";
+        return;
+    }
+
     $username = $_POST['username'];
     $password = $_POST['password'];
 
     try {
-        $sql = "SELECT * FROM User WHERE username = ?";
+        $sql = "SELECT * FROM user WHERE u_name = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if ($user && password_verify($password, $user['password'])) {
+        if ($user && password_verify($password, $user['Password'])) {
             $_SESSION['user_id'] = $user['id'];
-            $_SESSION['username'] = $user['username'];
-            $_SESSION['role'] = $user['role'];
+            $_SESSION['username'] = $user['u_name'];
+            $_SESSION['role'] = $user['Priv'];
             
             // Redirect based on the role
-            if ($user['role'] == 'admin') {
+            if ($user['Priv'] == 'admin') {
                 header("Location: admin_page.php");
             } else {
                 header("Location: user_page.php");
