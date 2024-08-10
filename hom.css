@@ -1,0 +1,44 @@
+/* General styles for the home page */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background-color: #007BFF;
+    color: #fff;
+    padding: 10px 0;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.site-name h1 {
+    margin: 0;
+}
+
+.header-links a {
+    color: #fff;
+    text-decoration: none;
+    margin-left: 20px;
+    font-size: 1em;
+}
+
+.header-links a:hover {
+    text-decoration: underline;
+}
+
+main {
+    padding: 20px;
+    text-align: center;
+}
