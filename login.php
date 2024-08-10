@@ -3,6 +3,9 @@ session_start();
 include_once("connection.php");
 
 function display_login_form() { ?>
+<div class="container">
+    <h1> User login🔑</h1>
+
     <form method="post" action="#">
         <label for="username">Username:</label>
         <input type="text" name="username" required><br>
@@ -12,6 +15,7 @@ function display_login_form() { ?>
         
         <input type="submit" name="login" value="Login">
     </form>
+</div>
 <?php }
 
 function login_user($conn) {
