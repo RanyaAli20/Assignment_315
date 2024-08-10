@@ -7,6 +7,7 @@ function display_form($conn) { ?>
     <div class="container">
         <table>
             <h1>Add aircraft data✈️</h1>
+            <br>
             <tr>
                 <td>Model</td>
                 <td><input type="text" name="Model" required></td>
