@@ -55,6 +55,7 @@ function register_user($conn) {
 <head>
 <meta charset="utf-8">
 <title>Register User</title>
+<link rel="stylesheet" type="text/css" href="user_registration.css">
 </head>
 <body>
 <?php
