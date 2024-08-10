@@ -55,7 +55,7 @@
             transition: background 0.3s;
         }
         .box:hover {
-            background: #0056b3;
+     background: #004080;;
         }
         .box a {
             color: #fff;
