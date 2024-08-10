@@ -29,14 +29,15 @@ function login_user($conn) {
         $stmt->execute([$username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if ($user && password_verify($password, $user['Password'])) {
-            $_SESSION['user_id'] = $user['id'];
+    
+        if ($user && $password == $user['Password']) {
+            $_SESSION['user_id'] = $user['U_no'];
             $_SESSION['username'] = $user['u_name'];
             $_SESSION['role'] = $user['Priv'];
             
-            // Redirect based on the role
-            if ($user['Priv'] == 'admin') {
-                header("Location: admin_page.php");
+            if ($user['Priv'] == 'Admin') {
+                header("Location: admin.php");
+
             } else {
                 header("Location: user_page.php");
             }

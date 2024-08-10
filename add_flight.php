@@ -1,58 +1,126 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-<meta charset="utf-8">
-<title>Add Flight</title>
-</head>
-<body>
-<h1>Add Flight</h1>
-
-<form method="post" action="add_flight.php">
-    <label for="F_no">Flight Number:</label>
-    <input type="text" name="F_no" required><br>
-
-    <label for="P_no">Plane Number:</label>
-    <input type="text" name="P_no" required><br>
-
-    <label for="from_C_no">From City Code:</label>
-    <input type="text" name="from_C_no" required><br>
-
-    <label for="to_C_no">To City Code:</label>
-    <input type="text" name="to_C_no" required><br>
-
-    <label for="D_time">Departure Time:</label>
-    <input type="datetime-local" name="D_time" required><br>
-
-    <label for="F_Date">Flight Date:</label>
-    <input type="date" name="F_Date" required><br>
-
-    <label for="Ar_time">Arrival Time:</label>
-    <input type="datetime-local" name="Ar_time" required><br>
-
-    <label for="F_prise">First Class Price:</label>
-    <input type="number" name="F_prise" required><br>
-
-    <label for="E_prise">Economy Price:</label>
-    <input type="number" name="E_prise" required><br>
-
-    <label for="Res_num_F">Reserved First Class Seats:</label>
-    <input type="number" name="Res_num_F" required><br>
-
-    <label for="Res_num_E">Reserved Economy Seats:</label>
-    <input type="number" name="Res_num_E" required><br>
-
-    <input type="submit" name="add_flight" value="Add Flight">
-</form>
 
 <?php
 include_once("connection.php");
 
-if (isset($_POST['add_flight'])) {
-    $F_no = $_POST['F_no'];
-    $P_no = $_POST['P_no'];
+function display_add_flight_form($conn) { ?>
+    <form method="post" action="#">
+        <table border='1'>
+            <tr>
+                <td>Plane Model</td>
+                <td>
+                    <select name="Model" required>
+                        <?php
+                        $sql = "SELECT Model FROM plan_info";
+                        $stmt = $conn->query($sql);
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo "<option value='{$row['Model']}'>{$row['Model']}</option>";
+                        }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Departure Location</td>
+                <td>
+                    <select name="from_C_no" required>
+                        <?php
+                        $sql = "SELECT C_no, C_Name FROM Country";
+                        $stmt = $conn->query($sql);
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo "<option value='{$row['C_no']}'>{$row['C_Name']}</option>";
+                        }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Arrival Location</td>
+                <td>                        
+                    <select name="to_C_no" required>
+                        <?php
+                        $sql = "SELECT C_no, C_Name FROM Country";
+                        $stmt = $conn->query($sql);
+                        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                            echo "<option value='{$row['C_no']}'>{$row['C_Name']}</option>";
+                        }
+                        ?>
+                    </select>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Departure Time</td>
+                <td><input type="time" name="D_Time" required></td>
+            </tr>
+
+            <tr>
+                <td>Flight Date</td>
+                <td><input type="date" name="F_Date" required></td>
+            </tr>
+
+            <tr>
+                <td>Arrival Time</td>
+                <td><input type="time" name="Ar_time" required></td>
+            </tr>
+
+            <tr>
+                <td>First Class Price</td>
+                <td><input type="number" name="F_prise" required></td>
+            </tr>
+
+            <tr>
+                <td>Economic Class Price</td>
+                <td><input type="number" name="E_prise" required></td>
+            </tr>
+
+            <tr>
+                <td>Reserved First Class Seats</td>
+                <td><input type="number" name="Res_num_F" required></td>
+            </tr>
+
+            <tr>
+                <td>Reserved Economic Class Seats</td>
+                <td><input type="number" name="Res_num_E" required></td>
+            </tr>
+
+            <tr>
+                <td align='center' colspan='2'><input name="add_flight" type="submit" value="Add Flight"></td>
+            </tr>
+        </table>
+    </form>
+<?php }
+
+function add_flight($conn, $Model, $from_C_no, $to_C_no, $D_Time, $F_Date, $Ar_time, $F_prise, $E_prise, $Res_num_F, $Res_num_E) {
+    try {
+        // الحصول على P_no بناءً على Model
+        $sql = "SELECT P_no FROM plan_info WHERE Model = '$Model'";
+        $stmt = $conn->query($sql);
+        $plane = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($plane) {
+            $P_no = $plane['P_no'];
+            
+            // إدخال البيانات إلى جدول الرحلات
+            $query = "INSERT INTO Flight (P_no, from_C_no, to_C_no, D_Time, F_Date, Ar_time, F_prise, E_prise, Res_num_F, Res_num_E)
+                      VALUES ('$P_no', '$from_C_no', '$to_C_no', '$D_Time', '$F_Date', '$Ar_time', '$F_prise', '$E_prise', '$Res_num_F', '$Res_num_E')";
+            $conn->exec($query);
+            echo "Flight added successfully!";
+        } else {
+            echo "Plane model not found!";
+        }
+    } catch (PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_flight'])) {
+    $Model = $_POST['Model'];
     $from_C_no = $_POST['from_C_no'];
     $to_C_no = $_POST['to_C_no'];
-    $D_time = $_POST['D_time'];
+    $D_Time = $_POST['D_Time'];
     $F_Date = $_POST['F_Date'];
     $Ar_time = $_POST['Ar_time'];
     $F_prise = $_POST['F_prise'];
@@ -60,15 +128,9 @@ if (isset($_POST['add_flight'])) {
     $Res_num_F = $_POST['Res_num_F'];
     $Res_num_E = $_POST['Res_num_E'];
 
-    try {
-        $sql = "INSERT INTO flight (F_no, P_no, from_C_no, to_C_no, D_time, F_Date, Ar_time, F_prise, E_prise, Res_num_F, Res_num_E)
-                VALUES ('$F_no', '$P_no', '$from_C_no', '$to_C_no', '$D_time', '$F_Date', '$Ar_time', $F_prise, $E_prise, $Res_num_F, $Res_num_E)";
-        $conn->exec($sql);
-        echo "Flight added successfully!";
-    } catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
-    }
+    add_flight($conn, $Model, $from_C_no, $to_C_no, $D_Time, $F_Date, $Ar_time, $F_prise, $E_prise, $Res_num_F, $Res_num_E);
+} else {
+    display_add_flight_form($conn);
 }
 ?>
-</body>
-</html>
+
