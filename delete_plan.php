@@ -62,6 +62,7 @@ function delete_selected_planes($conn, $planes_to_delete) {
 <head>
 <meta charset="utf-8">
 <title>Delete Planes</title>
+<link rel="stylesheet" type="text/css" href="delete_plan.css">
 </head>
 <body>
 <h1>Delete Planes</h1>
