@@ -1,12 +1,12 @@
 <?php 
 include_once("connection.php");
 
-//////// function to display the insert form
-function display_form($conn)
-{?>
+// دالة لعرض النموذج
+function display_form($conn) { ?>
     <form method="post" action="#">
-        <table border='1'>
-
+    <div class="container">
+        <table>
+            <h1>Add aircraft data</h1>
             <tr>
                 <td>Model</td>
                 <td><input type="text" name="Model" required></td>
@@ -67,13 +67,12 @@ function display_form($conn)
             </tr>
         </table>
     </form>
+                    </div>
 <?php 
 } // end function 
 
-///////////////////////////////////////////////////////////////
-//----------------- function insert------------------------------------------
-function insert_plane($conn)
-{
+// دالة لإدخال بيانات الطائرة
+function insert_plane($conn) {
     $Model = $_POST['Model'];
     $F_Num_seats = $_POST['F_Num_seats'];
     $E_Num_seats = $_POST['E_Num_seats'];
@@ -81,30 +80,30 @@ function insert_plane($conn)
     $Nationality = $_POST['Nationality'];
 
     try {    
-        $sql = "INSERT INTO plan_info ( Model, F_Num_seats, E_Num_seats, Comp_Name, Nationality)
+        $sql = "INSERT INTO plan_info (Model, F_Num_seats, E_Num_seats, Comp_Name, Nationality)
                 VALUES ('$Model', $F_Num_seats, $E_Num_seats, '$Comp_Name', '$Nationality')";
         $conn->exec($sql);
         echo "Plane added successfully!";
     } catch(PDOException $e) {
         echo "<br>" . $e->getMessage();
     }
-}// end function
-////////////////////////////////////////////
+}
 ?>
 
 <!DOCTYPE HTML>
 <html>
 <head>
-<meta charset="utf-8">
-<title>Add Plane</title>
+    <meta charset="utf-8">
+    <title>Add Plane</title>
+    <link rel="stylesheet" href="addplan.css"> <!-- ربط ملف CSS -->
 </head>
 <body>
-<?php
-if (!isset($_POST['add_plane'])){  
-    display_form($conn);
-} else {
-    insert_plane($conn);
-}
-?>
+    <?php
+    if (!isset($_POST['add_plane'])) {  
+        display_form($conn);
+    } else {
+        insert_plane($conn);
+    }
+    ?>
 </body>
 </html>
