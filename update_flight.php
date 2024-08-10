@@ -156,7 +156,9 @@ function update_flight($conn, $F_no, $P_no, $from_C_no, $to_C_no, $D_Time, $F_Da
         ?>
         <div class="container">
             <form method="post" action="#">
-                <label for="F_no">Select Flight Number to Update:</label>
+                <label for="F_no">Select Flight Number to Update:✈️📝</label>
+                <br>
+                <br>
                 <select name="F_no" required>
                     <?php
                     $sql = "SELECT F_no FROM Flight";
@@ -166,6 +168,10 @@ function update_flight($conn, $F_no, $P_no, $from_C_no, $to_C_no, $D_Time, $F_Da
                     }
                     ?>
                 </select>
+                <br>
+                <br>
+                <br>
+                <br>
                 <input type="submit" name="select_flight" value="Select Flight">
             </form>
         </div>
