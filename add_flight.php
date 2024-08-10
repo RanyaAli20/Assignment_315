@@ -1,3 +1,4 @@
+
 <?php
 include_once("connection.php");
 
@@ -126,8 +127,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_flight'])) {
     $E_prise = $_POST['E_prise'];
     $Res_num_F = $_POST['Res_num_F'];
     $Res_num_E = $_POST['Res_num_E'];
+
     add_flight($conn, $Model, $from_C_no, $to_C_no, $D_Time, $F_Date, $Ar_time, $F_prise, $E_prise, $Res_num_F, $Res_num_E);
 } else {
     display_add_flight_form($conn);
 }
 ?>
+

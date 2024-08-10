@@ -16,6 +16,7 @@ function display_company_selection_form($conn) {
             ?>
         </select>
         <input type="submit" name="select_company" value="Select Company">
+
     </form>
     <?php
 }
@@ -55,7 +56,6 @@ function delete_selected_planes($conn, $planes_to_delete) {
     }
 }
 
-
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -83,6 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 } else {
     display_company_selection_form($conn);
+
 }
 ?>
 

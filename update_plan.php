@@ -114,6 +114,7 @@ function display_form_search($conn) { ?>
         <input type="submit" name="button_getid" value="Select Plane">
     </form>
 <?php }
+
 // دالة لعرض خيارات الطائرات لاختيار واحدة
 function display_plane_selection($planes) { ?>
     <form method="post" action="#">
@@ -165,6 +166,7 @@ function update_plane_info($conn, $P_no, $Model, $F_Num_seats, $E_Num_seats, $Co
 if ($_SERVER["REQUEST_METHOD"] == "GET") {
     display_form_search($conn);
 } elseif (isset($_POST['button_getid'])) {
+
     $comp_name = $_POST['Comp_Name'];
     $planes = get_planes_by_company($conn, $comp_name);
     display_plane_selection($planes);
@@ -181,6 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $Nationality = $_POST['Nationality'];
 
     update_plane_info($conn, $P_no, $Model, $F_Num_seats, $E_Num_seats, $Comp_Name, $Nationality);
+
 }
 ?>
 </body>

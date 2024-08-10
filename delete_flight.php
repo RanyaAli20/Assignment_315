@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 include_once("connection.php");
 
@@ -34,3 +35,4 @@ if (isset($_POST['delete_flight'])) {
     display_delete_flight_form($conn);
 }
 ?>
+

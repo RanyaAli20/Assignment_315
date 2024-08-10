@@ -37,6 +37,7 @@ function login_user($conn) {
             
             if ($user['Priv'] == 'Admin') {
                 header("Location: admin.php");
+
             } else {
                 header("Location: user_page.php");
             }

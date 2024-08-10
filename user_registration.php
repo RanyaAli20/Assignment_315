@@ -28,18 +28,22 @@ function register_user($conn) {
     $role = $_POST['role'];
     $passport_no = $_POST['passport_no'];
 
+
     if (!ctype_digit($passport_no)) {
         echo "Passport number should contain digits only.";
         return;
     }
+
 
     try {
         $sql = "INSERT INTO user (u_name, Password, Priv, Passport_no) VALUES ('$username', '$password', '$role', '$passport_no')";
         $conn->exec($sql);
         echo "User registered successfully";
 
+
         header("Location: login.php");
         exit();
+
     } catch(PDOException $e) {
         echo "Error: " . $e->getMessage();
     }

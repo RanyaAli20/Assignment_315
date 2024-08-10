@@ -1,3 +1,4 @@
+
 <?php
 include_once("connection.php");
 
@@ -126,17 +127,21 @@ if (isset($_POST['select_flight'])) {
     $v = get_flight_info($conn, $F_no);
     display_update_flight_form($v, $conn);
 } elseif (isset($_POST['update_flight'])) {
+
     $F_no = $_POST['F_no'];
     $P_no = $_POST['P_no'];
     $from_C_no = $_POST['from_C_no'];
     $to_C_no = $_POST['to_C_no'];
+
     $D_Time = $_POST['D_Time'];
+
     $F_Date = $_POST['F_Date'];
     $Ar_time = $_POST['Ar_time'];
     $F_prise = $_POST['F_prise'];
     $E_prise = $_POST['E_prise'];
     $Res_num_F = $_POST['Res_num_F'];
     $Res_num_E = $_POST['Res_num_E'];
+
     update_flight($conn, $F_no, $P_no, $from_C_no, $to_C_no, $D_Time, $F_Date, $Ar_time, $F_prise, $E_prise, $Res_num_F, $Res_num_E);
 } else {
     ?>
@@ -156,3 +161,4 @@ if (isset($_POST['select_flight'])) {
     <?php
 }
 ?>
+
