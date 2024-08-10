@@ -5,8 +5,9 @@
     <link rel="stylesheet" type="text/css" href="css.css"> <!-- ربط ملف CSS -->
 </head>
 <body>
-    <h1> Add Flight✈️ </h1>
+    
     <div class="container">
+    <h1> Add Flight✈️ </h1>
         <?php
         include_once("connection.php");
 
