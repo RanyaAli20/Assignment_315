@@ -1,7 +1,7 @@
 <?php
+session_start(); // تأكد من بدء الجلسة
+
 include_once("connection.php");
-// استدعاء ملف الاتصال بقاعدة البيانات
- // تأكد من تضمين ملف الاتصال بقاعدة البيانات
 
 // دالة لحذف الحجز
 function cancel_reservation($res_no, $conn) {
@@ -23,11 +23,15 @@ function get_current_reservations($passport_no, $conn) {
 function handle_post_request($conn) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['cancel'])) {
-            $res_no = $_POST['res_no'];
-            if (cancel_reservation($res_no, $conn)) {
-                return "تم إلغاء الحجز بنجاح!";
+            $res_no = $_POST['res_no'] ?? null; // التأكد من وجود القيمة
+            if ($res_no) {
+                if (cancel_reservation($res_no, $conn)) {
+                    return "تم إلغاء الحجز بنجاح!";
+                } else {
+                    return "حدث خطأ أثناء إلغاء الحجز.";
+                }
             } else {
-                return "حدث خطأ أثناء إلغاء الحجز.";
+                return "يرجى اختيار حجز للإلغاء.";
             }
         }
     }
@@ -37,14 +41,33 @@ function handle_post_request($conn) {
 // تخزين الرسالة الناتجة عن المعالجة
 $message = handle_post_request($conn);
 
-// الحصول على الحجوزات الحالية للمستخدم
-$reservations = get_current_reservations($_SESSION['passport_no'], $conn);
+// التحقق من تسجيل الدخول والحصول على الحجوزات الحالية للمستخدم
+if (isset($_SESSION['passport_no'])) {
+    $reservations = get_current_reservations($_SESSION['passport_no'], $conn);
+} else {
+    echo "يرجى تسجيل الدخول للوصول إلى هذه الصفحة.";
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>إلغاء حجز رحلة</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
 <body>
     <h1>حجوزاتك الحالية</h1>
@@ -54,7 +77,7 @@ $reservations = get_current_reservations($_SESSION['passport_no'], $conn);
     
     <?php if (count($reservations) > 0): ?>
         <form method="post">
-            <table border="1">
+            <table>
                 <tr>
                     <th>رقم الحجز</th>
                     <th>رقم الرحلة</th>
@@ -65,13 +88,13 @@ $reservations = get_current_reservations($_SESSION['passport_no'], $conn);
                 </tr>
                 <?php foreach ($reservations as $reservation): ?>
                     <tr>
-                        <td><?php echo $reservation->Res_no; ?></td>
-                        <td><?php echo $reservation->F_no; ?></td>
-                        <td><?php echo $reservation->pass_Name; ?></td>
-                        <td><?php echo $reservation->Email; ?></td>
-                        <td><?php echo $reservation->Class; ?></td>
+                        <td><?php echo htmlspecialchars($reservation->Res_no); ?></td>
+                        <td><?php echo htmlspecialchars($reservation->F_no); ?></td>
+                        <td><?php echo htmlspecialchars($reservation->pass_Name); ?></td>
+                        <td><?php echo htmlspecialchars($reservation->Email); ?></td>
+                        <td><?php echo htmlspecialchars($reservation->Class); ?></td>
                         <td>
-                            <input type="radio" name="res_no" value="<?php echo $reservation->Res_no; ?>" />
+                            <input type="radio" name="res_no" value="<?php echo htmlspecialchars($reservation->Res_no); ?>" />
                         </td>
                     </tr>
                 <?php endforeach; ?>
