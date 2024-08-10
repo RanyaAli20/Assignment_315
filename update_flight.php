@@ -98,29 +98,19 @@ function get_flight_info($conn, $F_no) {
 
 function update_flight($conn, $F_no, $P_no, $from_C_no, $to_C_no, $D_Time, $F_Date, $Ar_time, $F_prise, $E_prise, $Res_num_F, $Res_num_E) {
     try {
+        // استخدام قيم مباشرة في الاستعلام
         $query = "UPDATE Flight 
-                  SET P_no = :P_no, from_C_no = :from_C_no, to_C_no = :to_C_no, D_Time = :D_Time, F_Date = :F_Date, Ar_time = :Ar_time,
-                      F_prise = :F_prise, E_prise = :E_prise, Res_num_F = :Res_num_F, Res_num_E = :Res_num_E
-                  WHERE F_no = :F_no";
+                  SET P_no = '$P_no', from_C_no = '$from_C_no', to_C_no = '$to_C_no', D_Time = '$D_Time', F_Date = '$F_Date', Ar_time = '$Ar_time',
+                      F_prise = '$F_prise', E_prise = '$E_prise', Res_num_F = '$Res_num_F', Res_num_E = '$Res_num_E'
+                  WHERE F_no = '$F_no'";
         $stmt = $conn->prepare($query);
-        $stmt->execute([
-            ':P_no' => $P_no,
-            ':from_C_no' => $from_C_no,
-            ':to_C_no' => $to_C_no,
-            ':D_Time' => $D_Time,
-            ':F_Date' => $F_Date,
-            ':Ar_time' => $Ar_time,
-            ':F_prise' => $F_prise,
-            ':E_prise' => $E_prise,
-            ':Res_num_F' => $Res_num_F,
-            ':Res_num_E' => $Res_num_E,
-            ':F_no' => $F_no
-        ]);
+        $stmt->execute();
         echo "Flight updated successfully!";
     } catch (PDOException $e) {
         echo "Error: " . $e->getMessage();
     }
 }
+
 
 if (isset($_POST['select_flight'])) {
     $F_no = $_POST['F_no'];
