@@ -58,34 +58,33 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Admin</h1>
+            <h1>Admin 👨‍✈️</h1>
         </div>
         <div class="box">
-            <h2>إدخال بيانات طائرة</h2>
-            <a href="add_plan.php">اذهب إلى الصفحة</a>
-        </div>
-        <div class="box">
-            <h2>تعديل بيانات طائرة</h2>
-            <a href="update_plan.php">اذهب إلى الصفحة</a>
-        </div>
-        <div class="box">
-            <h2>إلغاء بيانات طائرة</h2>
-            <a href="delete_plan.php">اذهب إلى الصفحة</a>
-        </div>
-        <div class="box">
-            <h2>إدخال بيانات رحلة</h2>
-            <a href="add_flight.php">اذهب إلى الصفحة</a>
-        </div>
-        <div class="box">
-            <h2>تعديل بيانات رحلة</h2>
-            <a href="update_flight.php">اذهب إلى الصفحة</a>
-        </div>
-        <div class="box">
-            <h2>الغاء رحلة</h2>
-
-            <a href="delet_flight.php">اذهب إلى الصفحة</a>
             
-            <a href="delete_flight.php">اذهب إلى الصفحة</a>
+            <a href="add_plan.php"> Add aircraft data</a>
+        </div>
+        <div class="box">
+            
+            <a href="update_plan.php"> Modify aircraft data</a>
+        </div>
+        <div class="box">
+            
+            <a href="delete_plan.php"> Cancel aircraft data</a>
+        </div>
+        <div class="box">
+            
+            <a href="add_flight.php">Add a trip</a>
+        </div>
+        <div class="box">
+            
+            <a href="update_flight.php">Modify trip data</a>
+        </div>
+        
+            
+            <a href="delet_flight.php">Cancel a trip</a>
+            
+            
 
         </div>
     </div>
