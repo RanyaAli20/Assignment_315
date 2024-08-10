@@ -83,7 +83,7 @@
         <div class="box">
             <h2>الغاء رحلة</h2>
             <a href="delet_flight.php">اذهب إلى الصفحة</a>
-            <
+            
         </div>
     </div>
 </body>
