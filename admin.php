@@ -80,9 +80,10 @@
             
             <a href="update_flight.php">Modify trip data</a>
         </div>
+        <div class="box">
         
             
-            <a href="delet_flight.php">Cancel a trip</a>
+            <a href="delete_flight.php">Cancel a trip</a>
             
             
 
