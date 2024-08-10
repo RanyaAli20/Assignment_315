@@ -67,10 +67,10 @@
             <h1>USER🧑🧳</h1>
         </div>
         <div class="box">
-            <a href="book_flight.php">حجز رحلة</a>
+            <a href="booking_form2.php">حجز رحلة</a>
         </div>
         <div class="box cancel">
-            <a href="cancel_booking.php">إلغاء حجز رحلة</a>
+            <a href="booking_form2.php">إلغاء حجز رحلة</a>
         </div>
     </div>
 </body>
