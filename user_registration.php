@@ -2,24 +2,27 @@
 include_once("connection.php");
 
 function display_registration_form($conn) { ?>
-    <form method="post" action="#">
-        <label for="username">Username:</label>
-        <input type="text" name="username" required><br>
-        
-        <label for="password">Password:</label>
-        <input type="password" name="password" required><br>
-        
-        <label for="role">Role:</label>
-        <select name="role" required>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-        </select><br>
-        
-        <label for="passport_no">Passport No:</label>
-        <input type="text" name="passport_no" required><br>
-        
-        <input type="submit" name="register" value="Register">
-    </form>
+    <div class="container">
+        <h2>Register a new user👨‍💼🆕</h2>
+        <form method="post" action="#">
+            <label for="username">username:</label>
+            <input type="text" name="username" required><br>
+            
+            <label for="password">password :</label>
+            <input type="password" name="password" required><br>
+            
+            <label for="role">Priv:</label>
+            <select name="role" required>
+                <option value="user">user</option>
+                <option value="admin">admin</option>
+            </select><br>
+            
+            <label for="passport_no">Passport number:</label>
+            <input type="text" name="passport_no" required><br>
+            
+            <input type="submit" name="register" value="register">
+        </form>
+    </div>
 <?php }
 
 function register_user($conn) {
@@ -28,24 +31,21 @@ function register_user($conn) {
     $role = $_POST['role'];
     $passport_no = $_POST['passport_no'];
 
-
     if (!ctype_digit($passport_no)) {
-        echo "Passport number should contain digits only.";
+        echo "رقم جواز السفر يجب أن يحتوي على أرقام فقط.";
         return;
     }
-
 
     try {
         $sql = "INSERT INTO user (u_name, Password, Priv, Passport_no) VALUES ('$username', '$password', '$role', '$passport_no')";
         $conn->exec($sql);
-        echo "User registered successfully";
-
+        echo "تم تسجيل المستخدم بنجاح";
 
         header("Location: login.php");
         exit();
 
     } catch(PDOException $e) {
-        echo "Error: " . $e->getMessage();
+        echo "خطأ: " . $e->getMessage();
     }
 }
 ?>
@@ -54,7 +54,7 @@ function register_user($conn) {
 <html>
 <head>
 <meta charset="utf-8">
-<title>Register User</title>
+<title>تسجيل مستخدم</title>
 <link rel="stylesheet" type="text/css" href="user_registration.css">
 </head>
 <body>
