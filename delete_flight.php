@@ -2,7 +2,8 @@
 include_once("connection.php");
 
 // دالة لعرض نموذج حذف الرحلة
-function display_delete_flight_form($conn) { ?>
+function display_delete_flight_form($conn) {
+    ?>
     <form method="post" action="#">
         <label for="F_no">Select Flight Number to Delete:</label>
         <select name="F_no" required>
@@ -16,7 +17,8 @@ function display_delete_flight_form($conn) { ?>
         </select>
         <input type="submit" name="delete_flight" value="Delete Flight">
     </form>
-<?php }
+    <?php
+}
 
 // دالة لحذف الرحلة
 function delete_flight($conn, $F_no) {
@@ -28,13 +30,6 @@ function delete_flight($conn, $F_no) {
     } catch (PDOException $e) {
         echo "<p>Error: " . $e->getMessage() . "</p>";
     }
-}
-
-if (isset($_POST['delete_flight'])) {
-    $F_no = $_POST['F_no'];
-    delete_flight($conn, $F_no);
-} else {
-    display_delete_flight_form($conn);
 }
 ?>
 
