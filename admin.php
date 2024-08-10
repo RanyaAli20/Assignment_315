@@ -1,94 +1,57 @@
-<!DOCTYPE html>
-<html lang="ar">
+<!DOCTYPE HTML>
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحة الإدارة - مطار طرابلس الدولي</title>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f0f0;
-            color: #333;
-        }
-        .container {
-            width: 80%;
-            max-width: 1000px;
-            margin: 50px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            color: #004080;
-        }
-        .box {
-            margin: 20px;
-            padding: 20px;
-            background: #007BFF;
-            color: #fff;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: background 0.3s;
-        }
-        .box:hover {
-            background: #0056b3;
-        }
-        .box a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 1.2em;
-            display: block;
-            margin-top: 10px;
-        }
-        .box a:hover {
-            text-decoration: underline;
-        }
-    </style>
+<meta charset="utf-8">
+<title>Admin Page</title>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Admin 👨‍✈️</h1>
-        </div>
-        <div class="box">
-            
-            <a href="add_plan.php"> Add aircraft data</a>
-        </div>
-        <div class="box">
-            
-            <a href="update_plan.php"> Modify aircraft data</a>
-        </div>
-        <div class="box">
-            
-            <a href="delete_plan.php"> Cancel aircraft data</a>
-        </div>
-        <div class="box">
-            
-            <a href="add_flight.php">Add a trip</a>
-        </div>
-        <div class="box">
-            
-            <a href="update_flight.php">Modify trip data</a>
-        </div>
-        <div class="box">
-        
-            
-            <a href="delete_flight.php">Cancel a trip</a>
-            
-            
+<h1>Welcome, Admin</h1>
 
-        </div>
-    </div>
+<form method="post" action="admin_page.php">
+    <label for="P_no">Plane Number:</label>
+    <input type="text" name="P_no" required><br>
+
+    <label for="Model">Model:</label>
+    <input type="text" name="Model" required><br>
+
+    <label for="F_Num_seats">Number of First Class Seats:</label>
+    <input type="number" name="F_Num_seats" required><br>
+
+    <label for="E_Num_seats">Number of Economy Seats:</label>
+    <input type="number" name="E_Num_seats" required><br>
+
+    <label for="Comp_Name">Company Name:</label>
+    <input type="text" name="Comp_Name" required><br>
+
+    <label for="Nationality">Nationality:</label>
+    <input type="text" name="Nationality" required><br>
+
+    <input type="submit" name="add_plane" value="Add Plane">
+</form>
+
+<?php
+include_once("connection.php");
+
+if (isset($_POST['add_plane'])) {
+
+    $P_no = $_POST['P_no'];
+    $Model = $_POST['Model'];
+    $F_Num_seats = $_POST['F_Num_seats'];
+    $E_Num_seats = $_POST['E_Num_seats'];
+    $Comp_Name = $_POST['Comp_Name'];
+    $Nationality = $_POST['Nationality'];
+
+    try {
+        $sql = "INSERT INTO plan_info (P_no, Model, F_Num_seats, E_Num_seats, Comp_Name, Nationality)
+                VALUES ('$P_no', '$Model', $F_Num_seats, $E_Num_seats, '$Comp_Name', '$Nationality')";
+        
+        $conn->exec($sql);
+
+        echo "Plane added successfully!";
+    } catch(PDOException $e) {
+        echo "Error: " . $e->getMessage();
+    }
+}
+?>
 </body>
 </html>
-
