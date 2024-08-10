@@ -1,0 +1,89 @@
+/* الأساسيات */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5; /* خلفية الصفحة الرمادية الفاتحة */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* لملء الشاشة بالكامل */
+}
+
+/* تنسيق الصندوق الذي يحتوي على الفورم */
+.container {
+    background-color: #fff; /* خلفية الصندوق البيضاء */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 900px; /* تحديد أقصى عرض للصندوق */
+    box-sizing: border-box;
+}
+
+/* تنسيق الفورم */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333; /* لون النص الداكن */
+}
+
+form input[type="text"],
+form input[type="number"],
+form input[type="time"],
+form input[type="date"],
+form select {
+    margin-bottom: 12px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%; /* عرض الحقول لتملأ العرض الكامل للصندوق */
+    box-sizing: border-box;
+}
+
+/* تنسيق زر الإرسال */
+input[type="submit"] {
+    background-color: #007bff; /* اللون الأزرق */
+    color: #fff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+/* تغييرات اللون عند التمرير فوق الزر */
+input[type="submit"]:hover {
+    background-color: #0056b3; /* ظل أزرق أغمق عند التمرير فوق الزر */
+}
+
+/* تنسيق الجدول */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* تنسيق الحقول الاختيارية */
+input[type="radio"] {
+    margin-right: 5px;
+}
