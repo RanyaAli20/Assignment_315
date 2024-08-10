@@ -6,18 +6,32 @@
     <title>صفحة الإدارة - مطار طرابلس الدولي</title>
     <style>
         body {
+            background-color: #f0f0f0;
+            background-image: url('images (1).jpeg'); /* صورة الخلفية */
+            background-size: cover; /* يجعل الصورة تغطي كامل الخلفية */
+            background-position: center; /* يضع الصورة في وسط الخلفية */
+            background-repeat: no-repeat; /* يمنع تكرار الصورة */
+            background-attachment: fixed;
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+        
             color: #333;
         }
         .container {
+            background:black(19, 19, 19, 0.9); /* استخدم خلفية بيضاء مع شفافية بسيطة لتحسين وضوح النصوص */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+           
             width: 80%;
             max-width: 1000px;
             margin: 50px auto;
             padding: 20px;
-            background: #fff;
+        
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -28,7 +42,7 @@
         .header h1 {
             margin: 0;
             font-size: 2.5em;
-            color: #004080;
+            color:#fff;
         }
         .box {
             margin: 20px;
@@ -41,7 +55,7 @@
             transition: background 0.3s;
         }
         .box:hover {
-            background: #0056b3;
+     background: #004080;;
         }
         .box a {
             color: #fff;

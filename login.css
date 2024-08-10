@@ -1,63 +1,66 @@
-/* Styles for the login page */
+/* login.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    color: #333;
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f0f0f0;
+    background-image: url('images (1).jpeg'); /* يمكنك تغيير الصورة إلى صورة الخلفية التي تريدها */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 .container {
-    width: 100%;
-    max-width: 400px;
-    margin: 100px auto;
-    padding: 20px;
-    background-color: #fff;
+    background: rgba(0, 0, 0, 0.7); /* خلفية ذات شفافية لتحسين وضوح النصوص */
+    padding: 30px;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); /* ظل خفيف للصندوق */
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    color: #fff; /* لون النصوص داخل الصندوق */
 }
 
-h1 {
-    text-align: center;
-    color: #007BFF;
+h2 {
+    margin-top: 0;
+    font-size: 24px; /* حجم أكبر للعناوين */
 }
 
 form {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 label {
-    margin-bottom: 5px;
-    font-weight: bold;
+    margin-bottom: 10px; /* المسافة بين النصوص والعناصر */
+    font-size: 16px; /* حجم خط مناسب للنصوص */
 }
 
 input[type="text"], input[type="password"] {
-    width: 100%;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
+    font-size: 16px;
+    width: calc(100% - 22px); /* عرض مناسب للعناصر */
 }
 
 input[type="submit"] {
-    background-color: #007BFF;
+    background: #007BFF;
     color: #fff;
-    border: none;
     padding: 15px;
-    font-size: 16px;
-    cursor: pointer;
+    border: none;
     border-radius: 4px;
-    transition: background-color 0.3s;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
 }
 
 input[type="submit"]:hover {
-    background-color: #0056b3;
-}
-
-.error {
-    color: red;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 10px;
+    background: #0056b3;
 }

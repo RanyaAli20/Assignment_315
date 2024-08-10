@@ -1,3 +1,10 @@
+<?php
+// يبدأ الجلسة ويتصل بقاعدة البيانات إذا لزم الأمر
+
+// يمكن إضافة أي منطق PHP هنا إذا لزم الأمر
+
+?>
+
 <!DOCTYPE html>
 <html lang="ar">
 <head>
@@ -9,15 +16,27 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f0f0f0;
+        
             color: #333;
+            background-image: url('images (1).jpeg'); /* يمكنك تغيير الصورة إلى صورة الخلفية التي تريدها */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
         }
         .container {
+            
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+
             width: 80%;
             max-width: 1000px;
             margin: 50px auto;
             padding: 20px;
-            background: #fff;
+        
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
@@ -28,12 +47,12 @@
         .header h1 {
             margin: 0;
             font-size: 2.5em;
-            color: #004080;
+            color:#fff;
         }
         .box {
             margin: 20px;
             padding: 20px;
-            background: #28a745; /* الأخضر للزر الأخضر */
+            background: #007BFF;
             color: #fff;
             border-radius: 8px;
             text-align: center;
@@ -41,7 +60,7 @@
             transition: background 0.3s;
         }
         .box:hover {
-            background: #218838; /* لون أغمق عند التمرير */
+            background: #004080;
         }
         .box a {
             color: #fff;
@@ -54,23 +73,32 @@
             text-decoration: underline;
         }
         .box.cancel {
-            background: #dc3545; /* الأحمر لإلغاء الحجز */
+            background: #007bff; /* الأحمر لإلغاء الحجز */
         }
         .box.cancel:hover {
-            background: #c82333; /* لون أغمق عند التمرير */
+            background: gray; /* لون أغمق عند التمرير */
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>USER🧑🧳</h1>
+            <h1>USER👤🧳</h1>
+            <br>
+            <br>
+            <br>
+            <br><br>
         </div>
         <div class="box">
-            <a href="booking_form2.php">حجز رحلة</a>
+            <a href="booking_form2.php">Book a trip</a>
+            <br>
+            <br>
+            <br>
         </div>
         <div class="box cancel">
+
             <a href="deletbokking.php">إلغاء حجز رحلة</a>
+
         </div>
     </div>
 </body>
