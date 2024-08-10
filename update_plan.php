@@ -123,13 +123,17 @@ function display_form_search($conn) { ?>
 function display_plane_selection($planes) { ?>
     <div class="container">
         <form method="post" action="#">
-            <label>Select Plane Model:</label>
+            <label>Select Plane Model:✈️📝</label>
             <br>
             <br>
             <?php foreach ($planes as $plane) { ?>
                 <input type="radio" id="P_no_<?= $plane['P_no']; ?>" name="P_no" value="<?= $plane['P_no']; ?>" required>
                 <label for="P_no_<?= $plane['P_no']; ?>"><?= $plane['Model']; ?></label><br>
             <?php } ?>
+            <br>
+            <br>
+            <br>
+            <br>
             <input type="submit" name="select_plane" value="Select Plane">
         </form>
     </div>
