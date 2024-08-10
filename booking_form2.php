@@ -24,15 +24,20 @@ function book_flight($conn, $flight_id, $passport_no, $pass_name, $email, $class
     }
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['book'])) {
-    $flight_id = $_POST['flight_id'];
-    $passport_no = $_POST['passport_no']; // تأكد من أن هذه البيانات يتم تقديمها من النموذج
-    $pass_name = $_POST['pass_name'];
-    $email = $_POST['email'];
-    $class = $_POST['class'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // الشرط الأول: التحقق من أن طريقة الطلب هي POST
+    if (isset($_POST['book'])) {
+        // الشرط الثاني: التحقق من أن النموذج الذي يحتوي على زر "حجز" قد تم إرساله
+        $flight_id = $_POST['flight_id'];
+        $passport_no = $_POST['passport_no'];
+        $pass_name = $_POST['pass_name'];
+        $email = $_POST['email'];
+        $class = $_POST['class'];
 
-    book_flight($conn, $flight_id, $passport_no, $pass_name, $email, $class);
+        book_flight($conn, $flight_id, $passport_no, $pass_name, $email, $class);
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -69,11 +74,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['book'])) {
         <label for="F_Date">تاريخ الرحلة:</label>
         <input type="date" name="F_Date" required><br>
 
-        <label for="class">الدرجة:</label>
-        <select name="class" required>
-            <option value="F">First Class</option>
-            <option value="E">Economy Class</option>
-        </select><br>
+        <label for="class">الدرجة:</label><br>
+        <input type="radio" id="class_f" name="class" value="F" required>
+        <label for="class_f">First Class</label><br>
+        <input type="radio" id="class_e" name="class" value="E" required>
+        <label for="class_e">Economy Class</label><br>
 
         <input type="submit" name="search" value="بحث">
     </form>
@@ -90,42 +95,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['book'])) {
         $stmt->execute([$from_C_no, $to_C_no, $F_Date]);
         $flights = $stmt->fetchAll(PDO::FETCH_OBJ);
         ?>
-        <h2>الرحلات المتاحة</h2>
-        <form method="post" action="#">
-            <table border="1">
-                <tr>
-                    <th>رقم الرحلة</th>
-                    <th>مكان المغادرة</th>
-                    <th>مكان الوصول</th>
-                    <th>تاريخ الرحلة</th>
-                    <th>الدرجة</th>
-                    <th>اختيار</th>
-                </tr>
-                <?php foreach ($flights as $flight): ?>
-                    <tr>
-                        <td><?php echo $flight->F_no; ?></td>
-                        <td><?php echo $flight->from_C_no; ?></td>
-                        <td><?php echo $flight->to_C_no; ?></td>
-                        <td><?php echo $flight->F_Date; ?></td>
-                        <td><?php echo $class; ?></td>
-                        <td>
-                            <input type="radio" name="flight_id" value="<?php echo $flight->F_no; ?>" required>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-            <br>
-            <label for="passport_no">رقم جواز السفر:</label>
-            <input type="text" name="passport_no" required><br>
+<h2>الرحلات المتاحة</h2>
+<form method="post" action="#">
+    <table border="1">
+        <tr>
+            <th>رقم الرحلة</th>
+            <th>مكان المغادرة</th>
+            <th>مكان الوصول</th>
+            <th>تاريخ الرحلة</th>
+            <th>الدرجة</th>
+            <th>اختيار</th>
+        </tr>
+        <?php foreach ($flights as $flight): ?>
+            <tr>
+                <td><?php echo $flight->F_no; ?></td>
+                <td><?php echo $flight->from_C_no; ?></td>
+                <td><?php echo $flight->to_C_no; ?></td>
+                <td><?php echo $flight->F_Date; ?></td>
+                <td><?php echo $class; ?></td>
+                <td>
+                    <input type="radio" name="flight_id" value="<?php echo $flight->F_no; ?>" required>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    </table>
+    <br>
+    <!-- إضافة الحقل المخفي لتمرير قيمة الدرجة -->
+    <input type="hidden" name="class" value="<?php echo $class; ?>">
 
-            <label for="pass_name">اسم المسافر:</label>
-            <input type="text" name="pass_name" required><br>
+    <label for="passport_no">رقم جواز السفر:</label>
+    <input type="text" name="passport_no" required><br>
 
-            <label for="email">البريد الإلكتروني:</label>
-            <input type="email" name="email" required><br>
+    <label for="pass_name">اسم المسافر:</label>
+    <input type="text" name="pass_name" required><br>
 
-            <input type="submit" name="book" value="حجز">
-        </form>
+    <label for="email">البريد الإلكتروني:</label>
+    <input type="email" name="email" required><br>
+
+    <input type="submit" name="book" value="book">
+</form>
+
     <?php } ?>
 </body>
 </html>

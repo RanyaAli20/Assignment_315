@@ -1,6 +1,3 @@
-<?php
-session_start(); // تأكد من بدء الجلسة
-
 include_once("connection.php");
 
 // دالة لحذف الحجز
@@ -20,7 +17,7 @@ function get_current_reservations($passport_no, $conn) {
 }
 
 // التعامل مع البيانات المستلمة من النموذج
-function handle_post_request($conn) {
+function handle_post_request($conn, $passport_no) {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (isset($_POST['cancel'])) {
             $res_no = $_POST['res_no'] ?? null; // التأكد من وجود القيمة
@@ -38,14 +35,14 @@ function handle_post_request($conn) {
     return null;
 }
 
-// تخزين الرسالة الناتجة عن المعالجة
-$message = handle_post_request($conn);
-
 // التحقق من تسجيل الدخول والحصول على الحجوزات الحالية للمستخدم
-if (isset($_SESSION['passport_no'])) {
-    $reservations = get_current_reservations($_SESSION['passport_no'], $conn);
+$passport_no = $_POST['passport_no'] ?? null;
+
+if ($passport_no) {
+    $reservations = get_current_reservations($passport_no, $conn);
+    $message = handle_post_request($conn, $passport_no);
 } else {
-    echo "يرجى تسجيل الدخول للوصول إلى هذه الصفحة.";
+    echo "يرجى إدخال رقم جواز السفر للوصول إلى هذه الصفحة.";
     exit;
 }
 ?>
@@ -71,12 +68,19 @@ if (isset($_SESSION['passport_no'])) {
 </head>
 <body>
     <h1>حجوزاتك الحالية</h1>
+    <form method="post">
+        <label for="passport_no">رقم جواز السفر:</label>
+        <input type="text" name="passport_no" value="<?php echo htmlspecialchars($passport_no); ?>" required>
+        <input type="submit" value="عرض الحجوزات">
+    </form>
+
     <?php if ($message): ?>
         <p><?php echo $message; ?></p>
     <?php endif; ?>
     
-    <?php if (count($reservations) > 0): ?>
+    <?php if ($passport_no && count($reservations) > 0): ?>
         <form method="post">
+            <input type="hidden" name="passport_no" value="<?php echo htmlspecialchars($passport_no); ?>">
             <table>
                 <tr>
                     <th>رقم الحجز</th>
@@ -102,7 +106,7 @@ if (isset($_SESSION['passport_no'])) {
             <br>
             <input type="submit" name="cancel" value="إلغاء الحجز">
         </form>
-    <?php else: ?>
+    <?php elseif ($passport_no): ?>
         <p>لا توجد حجوزات حالياً.</p>
     <?php endif; ?>
 </body>
