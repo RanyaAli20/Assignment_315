@@ -1,4 +1,6 @@
 <?php
+include_once("connection.php");
+
 // عرض نموذج البحث وعرض الرحلات
 function search_view_form_radio($conn) {
     if (isset($_POST['search_flights'])) {
@@ -88,5 +90,6 @@ function search_view_form_radio($conn) {
 </html>
 
 <?php
-$conn->close();
+$conn = null;
+
 ?>
