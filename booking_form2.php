@@ -24,20 +24,41 @@ function book_flight($conn, $flight_id, $passport_no, $pass_name, $email, $class
     }
 }
 
+function validate_input($passport_no, $pass_name, $email) {
+    // التحقق من رقم جواز السفر (أرقام فقط)
+    if (!preg_match('/^\d+$/', $passport_no)) {
+        echo "رقم جواز السفر يجب أن يحتوي على أرقام فقط.";
+        return false;
+    }
+
+    // التحقق من اسم المسافر (حروف فقط)
+    if (!preg_match('/^[a-zA-Z\s]+$/', $pass_name)) {
+        echo "اسم المسافر يجب أن يحتوي على حروف فقط.";
+        return false;
+    }
+
+    // التحقق من البريد الإلكتروني
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "البريد الإلكتروني غير صحيح.";
+        return false;
+    }
+
+    return true;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // الشرط الأول: التحقق من أن طريقة الطلب هي POST
     if (isset($_POST['book'])) {
-        // الشرط الثاني: التحقق من أن النموذج الذي يحتوي على زر "حجز" قد تم إرساله
         $flight_id = $_POST['flight_id'];
         $passport_no = $_POST['passport_no'];
         $pass_name = $_POST['pass_name'];
         $email = $_POST['email'];
         $class = $_POST['class'];
 
-        book_flight($conn, $flight_id, $passport_no, $pass_name, $email, $class);
+        if (validate_input($passport_no, $pass_name, $email)) {
+            book_flight($conn, $flight_id, $passport_no, $pass_name, $email, $class);
+        }
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -132,7 +153,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <label for="email">البريد الإلكتروني:</label>
     <input type="email" name="email" required><br>
 
-    <input type="submit" name="book" value="book">
+    <input type="submit" name="book" value="حجز">
 </form>
 
     <?php } ?>

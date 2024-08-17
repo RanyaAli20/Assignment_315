@@ -7,7 +7,7 @@
 <body>
     
     <div class="container">
-    <h1> Add Flight✈️ </h1>
+        <h1> Add Flight✈️ </h1>
         <?php
         include_once("connection.php");
 
@@ -76,22 +76,22 @@
 
                     <tr>
                         <td>First Class Price</td>
-                        <td><input type="number" name="F_prise" required></td>
+                        <td><input type="number" name="F_prise" step="0.01" required></td>
                     </tr>
 
                     <tr>
                         <td>Economic Class Price</td>
-                        <td><input type="number" name="E_prise" required></td>
+                        <td><input type="number" name="E_prise" step="0.01" required></td>
                     </tr>
 
                     <tr>
                         <td>Reserved First Class Seats</td>
-                        <td><input type="number" name="Res_num_F" required></td>
+                        <td><input type="number" name="Res_num_F" min="0" required></td>
                     </tr>
 
                     <tr>
                         <td>Reserved Economic Class Seats</td>
-                        <td><input type="number" name="Res_num_E" required></td>
+                        <td><input type="number" name="Res_num_E" min="0" required></td>
                     </tr>
 
                     <tr>
@@ -103,18 +103,41 @@
 
         function add_flight($conn, $Model, $from_C_no, $to_C_no, $D_Time, $F_Date, $Ar_time, $F_prise, $E_prise, $Res_num_F, $Res_num_E) {
             try {
+                // التحقق من صحة البيانات المدخلة
+                if (!preg_match('/^\d{2}:\d{2}$/', $D_Time)) {
+                    echo "زمن المغادرة غير صحيح. يجب أن يكون بتنسيق HH:MM.";
+                    return;
+                }
+
+                if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $F_Date)) {
+                    echo "تاريخ الرحلة غير صحيح.";
+                    return;
+                }
+
+                if (!is_numeric($F_prise) || !is_numeric($E_prise)) {
+                    echo "الأسعار يجب أن تكون أرقاماً.";
+                    return;
+                }
+
+                if (!is_numeric($Res_num_F) || !is_numeric($Res_num_E)) {
+                    echo "عدد المقاعد المحجوزة يجب أن يكون رقماً صحيحاً.";
+                    return;
+                }
+
                 // الحصول على P_no بناءً على Model
-                $sql = "SELECT P_no FROM plan_info WHERE Model = '$Model'";
-                $stmt = $conn->query($sql);
+                $sql = "SELECT P_no FROM plan_info WHERE Model = ?";
+                $stmt = $conn->prepare($sql);
+                $stmt->execute([$Model]);
                 $plane = $stmt->fetch(PDO::FETCH_ASSOC);
-                
+
                 if ($plane) {
                     $P_no = $plane['P_no'];
-                    
+
                     // إدخال البيانات إلى جدول الرحلات
                     $query = "INSERT INTO Flight (P_no, from_C_no, to_C_no, D_Time, F_Date, Ar_time, F_prise, E_prise, Res_num_F, Res_num_E)
-                              VALUES ('$P_no', '$from_C_no', '$to_C_no', '$D_Time', '$F_Date', '$Ar_time', '$F_prise', '$E_prise', '$Res_num_F', '$Res_num_E')";
-                    $conn->exec($query);
+                              VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    $stmt = $conn->prepare($query);
+                    $stmt->execute([$P_no, $from_C_no, $to_C_no, $D_Time, $F_Date, $Ar_time, $F_prise, $E_prise, $Res_num_F, $Res_num_E]);
                     echo "Flight added successfully!";
                 } else {
                     echo "Plane model not found!";
