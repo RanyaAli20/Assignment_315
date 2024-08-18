@@ -110,51 +110,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $to_C_no = $_POST['to_C_no'];
         $F_Date = $_POST['F_Date'];
         $class = $_POST['class'];
-
-        $sql = "SELECT * FROM Flight WHERE from_C_no = ? AND to_C_no = ? AND F_Date = ?";
+        
+        // تعديل استعلام البحث ليتضمن أسماء الدول ووقت الرحلة
+        $sql = "SELECT F.F_no, C1.C_Name AS from_country, C2.C_Name AS to_country, F.F_Date, F.D_Time
+                FROM Flight F
+                JOIN Country C1 ON F.from_C_no = C1.C_no
+                JOIN Country C2 ON F.to_C_no = C2.C_no
+                WHERE F.from_C_no = ? AND F.to_C_no = ? AND F.F_Date = ?";
         $stmt = $conn->prepare($sql);
         $stmt->execute([$from_C_no, $to_C_no, $F_Date]);
         $flights = $stmt->fetchAll(PDO::FETCH_OBJ);
         ?>
-<h2>الرحلات المتاحة</h2>
-<form method="post" action="#">
-    <table border="1">
-        <tr>
-            <th>رقم الرحلة</th>
-            <th>مكان المغادرة</th>
-            <th>مكان الوصول</th>
-            <th>تاريخ الرحلة</th>
-            <th>الدرجة</th>
-            <th>اختيار</th>
-        </tr>
-        <?php foreach ($flights as $flight): ?>
-            <tr>
-                <td><?php echo $flight->F_no; ?></td>
-                <td><?php echo $flight->from_C_no; ?></td>
-                <td><?php echo $flight->to_C_no; ?></td>
-                <td><?php echo $flight->F_Date; ?></td>
-                <td><?php echo $class; ?></td>
-                <td>
-                    <input type="radio" name="flight_id" value="<?php echo $flight->F_no; ?>" required>
-                </td>
-            </tr>
-        <?php endforeach; ?>
-    </table>
-    <br>
-    <!-- إضافة الحقل المخفي لتمرير قيمة الدرجة -->
-    <input type="hidden" name="class" value="<?php echo $class; ?>">
-
-    <label for="passport_no">رقم جواز السفر:</label>
-    <input type="text" name="passport_no" required><br>
-
-    <label for="pass_name">اسم المسافر:</label>
-    <input type="text" name="pass_name" required><br>
-
-    <label for="email">البريد الإلكتروني:</label>
-    <input type="email" name="email" required><br>
-
-    <input type="submit" name="book" value="حجز">
-</form>
+        <h2>الرحلات المتاحة</h2>
+        <form method="post" action="#">
+            <table border="1">
+                <tr>
+                    <th>رقم الرحلة</th>
+                    <th>مكان المغادرة</th>
+                    <th>مكان الوصول</th>
+                    <th>تاريخ الرحلة</th>
+                    <th>وقت الرحلة</th>
+                    <th>الدرجة</th>
+                    <th>اختيار</th>
+                </tr>
+                <?php foreach ($flights as $flight): ?>
+                    <tr>
+                        <td><?php echo $flight->F_no; ?></td>
+                        <td><?php echo $flight->from_country; ?></td>
+                        <td><?php echo $flight->to_country; ?></td>
+                        <td><?php echo $flight->F_Date; ?></td>
+                        <td><?php echo $flight->D_Time; ?></td>
+                        <td><?php echo $class; ?></td>
+                        <td>
+                            <input type="radio" name="flight_id" value="<?php echo $flight->F_no; ?>" required>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
+            <br>
+            <!-- إضافة الحقل المخفي لتمرير قيمة الدرجة -->
+            <input type="hidden" name="class" value="<?php echo $class; ?>">
+        
+            <label for="passport_no">رقم جواز السفر:</label>
+            <input type="text" name="passport_no" required><br>
+        
+            <label for="pass_name">اسم المسافر:</label>
+            <input type="text" name="pass_name" required><br>
+        
+            <label for="email">البريد الإلكتروني:</label>
+            <input type="email" name="email" required><br>
+        
+            <input type="submit" name="book" value="حجز">
+        </form>
+        
 
     <?php } ?>
 </body>
