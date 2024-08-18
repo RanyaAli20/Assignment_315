@@ -110,8 +110,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $to_C_no = $_POST['to_C_no'];
         $F_Date = $_POST['F_Date'];
         $class = $_POST['class'];
-        
-        // تعديل استعلام البحث ليتضمن أسماء الدول ووقت الرحلة
+
+    
         $sql = "SELECT F.F_no, C1.C_Name AS from_country, C2.C_Name AS to_country, F.F_Date, F.D_Time
                 FROM Flight F
                 JOIN Country C1 ON F.from_C_no = C1.C_no
