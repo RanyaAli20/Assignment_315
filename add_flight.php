@@ -7,7 +7,7 @@
 <body>
     
     <div class="container">
-        <h1> Add Flight✈️ </h1>
+        <h1> Add Flight </h1>
         <?php
         include_once("connection.php");
 
